@@ -1,3 +1,4 @@
 .env
 saves/
 .venv/
+__pycache__/
