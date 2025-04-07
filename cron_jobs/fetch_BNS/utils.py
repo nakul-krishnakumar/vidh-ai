@@ -1,6 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
 import urllib.request
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 def fetch_latest_BNS(URL: str):
    try:
@@ -18,14 +21,9 @@ def fetch_latest_BNS(URL: str):
          href = a.get('href')
          print(href)
 
-         download_url = "https://www.mha.gov.in/" + str(href)
-         urllib.request.urlretrieve(download_url, f"saves/file_{count}.pdf")
+         download_url = os.getenv("MHA_BASE_URL") + str(href)
+         urllib.request.urlretrieve(download_url, f"temp/file_{count}.pdf")
          count += 1
 
    except requests.RequestException as e:
       print(f"An error occured while fetching the file! \n{e}")
-      
-
-if __name__ == '__main__':
-   URL = "https://www.mha.gov.in/en/commoncontent/new-criminal-laws"
-   fetch_latest_BNS(URL)
