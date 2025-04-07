@@ -3,6 +3,7 @@ name: Fetch latest BNS PDFs once every year
 on:
    schedule:
       - cron: "*/2 * * * *" # Runs every 2 minutes
+   workflow_dispatch:
 
 jobs:
    run-utils:
