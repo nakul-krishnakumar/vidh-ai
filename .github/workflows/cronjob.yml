@@ -1,0 +1,28 @@
+name: Fetch latest BNS PDFs once every year
+
+on:
+   schedule:
+      - cron: "*/2 * * * *" # Runs every 2 minutes
+   workflow_dispatch:
+
+jobs:
+   run-utils:
+      runs-on: ubuntu-latest
+
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v4 # this action checksout the repo 
+
+         - name: Set up Python env
+           uses: actions/setup-python@v5
+           with:
+            python-version: '3.12'
+
+         - name: Install dependencies
+           run: |
+            python -m venv .venv
+            source .venv/bin/activate
+            pip install -r requirements.txt
+         
+         - name: Run utils.py
+           run: python3 cron_jobs/fetch_BNS/utils.py 
