@@ -1,1 +1,0 @@
-from .utils import fetch_latest_BNS

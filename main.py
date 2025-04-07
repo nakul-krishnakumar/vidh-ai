@@ -1,6 +1,5 @@
 from fastapi import FastAPI
-from cron_jobs import fetch_latest_BNS
-from utils import save_files_to_bucket
+from utils import save_files_to_bucket, fetch_latest_BNS
 from dotenv import load_dotenv
 import os
 load_dotenv()
