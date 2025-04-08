@@ -1,5 +1,9 @@
 import streamlit as st
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # Page configuration
 st.set_page_config(
@@ -37,14 +41,14 @@ if user_input:
     
     try:
         backend_response = requests.post(
-            "http://localhost:8000/query",  # 👈 Replace with your actual backend URL
+            os.path.join(os.getenv("BACKEND_URL"), "chat/query"),
             json={"query": user_input}
         )
         backend_response.raise_for_status()
         response = backend_response.json().get("response", "No response from backend.")
     
     except requests.exceptions.RequestException as e:
-        response = f"❌ Error contacting backend: {e}"
+        response = f"Error contacting backend: {e}"
     
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})

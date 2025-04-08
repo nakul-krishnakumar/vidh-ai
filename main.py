@@ -1,30 +1,27 @@
 from fastapi import FastAPI
-from utils import save_files_to_bucket, fetch_latest_BNS
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import uvicorn
 import os
 
+from routes import api, chat
+
 load_dotenv()
 app = FastAPI()
+
+# middlewares
+app.add_middleware(CORSMiddleware)
+
+# sub route /api
+app.include_router(api.router, prefix='/api')
+app.include_router(chat.router, prefix='/chat')
 
 # base url
 @app.get("/")
 async def index():
    return {"message": "Hello World!"}
 
-# have set a cronjob to hit this api endpoint once every year
-@app.get("/trigger-fetch")
-async def fetch():
-   URL = os.getenv("MHA_BNS_PAGE_URL")
-   fetch_latest_BNS(URL) # fetches & downloads to temp folder
-   save_files_to_bucket() # saves to bucket & delete the files
-
-   return {"message": "Fetched and saved documents to bucket!"}
-
 if __name__ == "__main__":
    port = int(os.environ.get("PORT", 8000))
    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
 
-@app.get("/keep-alive")
-async def keep_alive():
-   return {"message": "Server is alive and running"}
