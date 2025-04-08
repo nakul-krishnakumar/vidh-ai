@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 
 # Page configuration
 st.set_page_config(
@@ -34,15 +35,20 @@ if user_input:
     with st.chat_message("user"):
         st.write(user_input)
     
-    # Prepare response (replace this with your RAG implementation)
-    if "document" in user_input.lower() or "rag" in user_input.lower():
-        response = "Based on your documents, I found some relevant information about RAG systems."
-    else:
-        response = "I'm a simple RAG bot. How can I help you today?"
+    try:
+        backend_response = requests.post(
+            "http://localhost:8000/query",  # 👈 Replace with your actual backend URL
+            json={"query": user_input}
+        )
+        backend_response.raise_for_status()
+        response = backend_response.json().get("response", "No response from backend.")
     
-    # Add bot response to chat history
-    st.session_state.messages.append({"role": "bot", "content": response})
+    except requests.exceptions.RequestException as e:
+        response = f"❌ Error contacting backend: {e}"
     
-    # Display bot response
-    with st.chat_message("bot"):
+    # Add assistant response to chat history
+    st.session_state.messages.append({"role": "assistant", "content": response})
+    
+    # Display assistant response
+    with st.chat_message("assistant"):
         st.write(response)
