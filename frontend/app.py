@@ -40,8 +40,10 @@ if user_input:
         st.write(user_input)
     
     try:
+        path = os.path.join(os.getenv("BACKEND_URL"), "chat/query")
+        print(path)
         backend_response = requests.post(
-            os.path.join(os.getenv("BACKEND_URL"), "chat/query"),
+            path,
             json={"query": user_input}
         )
         backend_response.raise_for_status()

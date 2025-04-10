@@ -1,8 +1,7 @@
 from langchain_pinecone import Pinecone as LangchainPinecone
 from langchain_openai import OpenAIEmbeddings
 from langchain.schema import Document
-from dotenv import load_dotenv
-from db import connect_to_pinecone, initialize_vector_store
+from db import initialize_vector_store
 
 # split data into batches, due to upsert size limit
 def batch_documents(docs: list[Document], batch_size: int):
