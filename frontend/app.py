@@ -42,7 +42,8 @@ if user_input:
     try:
         with st.spinner("Retrieving..."):
             path = os.path.join(os.getenv("BACKEND_URL"), "chat/query")
-            
+            print("path: ", path)
+
             backend_response = requests.post(
                 path,
                 json={"query": user_input}
