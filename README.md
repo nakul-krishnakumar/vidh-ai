@@ -61,22 +61,30 @@ bns-rag/
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
-3. Install dependencies:
+3. Setup environment variables:
+   ```env
+   OPENAI_API_KEY=your-openai-api-key
+   PINECONE_API_KEY=your-pinecone-api-key
+   PINECONE_INDEX_NAME=your-pinecone-index-name
+   PINECONE_NAMESPACE=your-pinecone-namespace
+   ```
+
+4. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Launch the server:
+5. Launch the server:
    ```bash
    python main.py
    ```
 
-5. Launch the application:
+6. Launch the application:
    ```bash
    streamlit run frontend/app.py
    ```
 
-6. Open your browser and navigate to the URL displayed in the terminal (typically http://localhost:8501)
+7. Open your browser and navigate to the URL displayed in the terminal (typically http://localhost:8501)
 
 ## Contact and Support
 
