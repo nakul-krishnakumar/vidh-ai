@@ -76,7 +76,7 @@ bns-rag/
    streamlit run frontend/app.py
    ```
 
-6. Open your browser and navigate to the URL displayed in the terminal (typically http://localhost:8501)[1][4]
+6. Open your browser and navigate to the URL displayed in the terminal (typically http://localhost:8501)
 
 ## Contact and Support
 
