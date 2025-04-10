@@ -26,7 +26,6 @@ def search_pinecone(query: str, index_name: str, namespace: str, k: int) -> tupl
       print("Fetched vectorstore")
       
       docs: list[Document] = vectorstore.similarity_search(query, k=3)
-      print(len(docs))
       return docs, None
 
    except Exception as err:
