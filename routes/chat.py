@@ -18,10 +18,13 @@ async def read_query(req: Request):
       index_name = os.getenv("PINECONE_INDEX_NAME")
       namespace = os.getenv("PINECONE_NAMESPACE")
 
-      matched_docs = search_pinecone(query=query, index_name=index_name, namespace=namespace, k=7)
+      matched_docs, err = search_pinecone(query=query, index_name=index_name, namespace=namespace, k=7)
+      if err:
+         return { "error": err}
+      
       response = generate_answer_from_context(context=matched_docs, query=query)
 
-      print(response)
+      # print(response)
       return { "response": response }
    
    except Exception as e:

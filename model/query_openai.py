@@ -1,13 +1,9 @@
 from langchain_openai import ChatOpenAI
 from langchain.schema import Document
 
-def generate_answer_from_context(context: tuple[list[Document], str], query: str) -> str | list[str | dict]:
-    # Unpack the context tuple
-    documents, additional_info = context
-
+def generate_answer_from_context(context: list[Document], query: str) -> str | list[str | dict]:
     # Combine the page_content of all documents into a single string
-    combined_context = "\n\n".join([doc.page_content for doc in documents])
-
+    combined_context = "\n\n".join([doc.page_content for doc in context])
     print(combined_context)
 
     prompt = (
@@ -35,9 +31,9 @@ def generate_answer_from_context(context: tuple[list[Document], str], query: str
 
     RESPONSE FORMATTING:
     Structure your response with clear headings in Markdown format:
-    - Use # (H3) for the main title (e.g., "# BNS Section 304: Culpable Homicide")
-    - Use ## (H4) for major sections (e.g., "## Definition", "## Punishment", "## Key Elements")
-    - Use ### (H5) for subsections where needed
+    - Use # (H4) for the main title (e.g., "# BNS Section 304: Culpable Homicide")
+    - Use ## (H5) for major sections (e.g., "## Definition", "## Punishment", "## Key Elements")
+    - Use ### (H6) for subsections where needed
     - Use **bold text** for emphasis on important points
     - Use bullet points for listing elements or requirements
     - Include section numbers in headings when available
@@ -59,7 +55,7 @@ def generate_answer_from_context(context: tuple[list[Document], str], query: str
       [Detail punishment provisions if available]
       
       ## Source Information
-      [If multiple punishment details are found, note: 'Note: The context contains varying punishment information for this section. I have provided all available details.']"
+      [If multiple punishment details are found, note: 'Note: The context contains varying punishment information for this section. I have provided all available details.' else let the user know that the information is according to the latest criminal laws]"
 
     - Only use the fallback response if absolutely nothing relevant is found:
       "# Information Not Available
@@ -72,14 +68,14 @@ def generate_answer_from_context(context: tuple[list[Document], str], query: str
     - Always prioritize finding and providing information from the context rather than defaulting to the fallback response.
     ----
     Context:
-    {context}
+    {combined_context}
     ----
     User query:
     {query}
     ----
     Answer:
     """)
-    
+
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
     response = llm.invoke(prompt)
     return response.content
