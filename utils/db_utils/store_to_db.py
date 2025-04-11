@@ -24,7 +24,7 @@ async def embed_and_store(chunks: list[Document], namespace: str, index_name: st
 
    try:
       # embedding model
-      embedding = OpenAIEmbeddings(model="text-embedding-3-small")
+      embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
 
       total_uploaded = 0 # keeping count of num of batches uploaded
 
@@ -32,7 +32,7 @@ async def embed_and_store(chunks: list[Document], namespace: str, index_name: st
          # generate embeddings from chunks and upserts it to pinecone
          LangchainPinecone.from_documents(
             documents=batch,
-            embedding=embedding,
+            embedding=embedding_model,
             index_name=index_name,
             namespace=namespace
          )

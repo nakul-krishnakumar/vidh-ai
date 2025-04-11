@@ -1,8 +1,4 @@
-import os
 from pinecone import Pinecone
-from dotenv import load_dotenv
-
-load_dotenv()
 
 def connect_to_pinecone(PINECONE_API_KEY: str) -> tuple[Pinecone, str]:    
 

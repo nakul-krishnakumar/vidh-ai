@@ -6,6 +6,7 @@ import time
 import os
 
 load_dotenv()
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36"}
 
 def fetch_latest_BNS(URL: str) -> tuple[list[BytesIO], str]:
    try:
@@ -24,8 +25,6 @@ def fetch_latest_BNS(URL: str) -> tuple[list[BytesIO], str]:
          print(href)
 
          download_url = os.getenv("MHA_BASE_URL") + str(href) # get the pdf url
-
-         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36"}
 
          file_res: requests.Response = requests.get(download_url, headers=headers, timeout=10) 
          if file_res.status_code == 200:
