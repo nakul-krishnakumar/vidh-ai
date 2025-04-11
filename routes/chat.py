@@ -18,7 +18,7 @@ async def read_query(req: Request):
       index_name = os.getenv("PINECONE_INDEX_NAME")
       namespace = os.getenv("PINECONE_NAMESPACE")
 
-      matched_docs = search_pinecone(query=query, index_name=index_name, namespace=namespace, k=3)
+      matched_docs = search_pinecone(query=query, index_name=index_name, namespace=namespace, k=7)
       response = generate_answer_from_context(context=matched_docs, query=query)
 
       print(response)

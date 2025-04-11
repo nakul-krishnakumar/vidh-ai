@@ -8,7 +8,7 @@ def chunk_file_data(file_datas: list[BytesIO]) -> list[Document]:
    chunks: list[Document] = []
 
    # splits the characters into chunks
-   splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
+   splitter = RecursiveCharacterTextSplitter(chunk_size=3000, chunk_overlap=300)
 
    try:
       for file_data in file_datas:

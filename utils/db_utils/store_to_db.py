@@ -6,7 +6,7 @@ from db import initialize_vector_store
 # split data into batches, due to upsert size limit
 def batch_documents(docs: list[Document], batch_size: int):
    for i in range(0, len(docs), batch_size):
-      yield docs[i:i + batch_size]
+      yield docs[i:i + batch_size] # returns a generator object
 
 async def embed_and_store(chunks: list[Document], namespace: str, index_name: str, pc: LangchainPinecone) -> tuple[LangchainPinecone, str]:
 
@@ -28,7 +28,7 @@ async def embed_and_store(chunks: list[Document], namespace: str, index_name: st
 
       total_uploaded = 0 # keeping count of num of batches uploaded
 
-      for batch in batch_documents(chunks, 1000):
+      for batch in batch_documents(chunks, 200): #batch_documnet func returns a generator object
          # generate embeddings from chunks and upserts it to pinecone
          LangchainPinecone.from_documents(
             documents=batch,
@@ -38,7 +38,7 @@ async def embed_and_store(chunks: list[Document], namespace: str, index_name: st
          )
 
          total_uploaded += len(batch)
-         print(f"Uploaded {total_uploaded}) chunks in total")
+         print(f"Uploaded {total_uploaded} chunks in total")
 
       print(f"Uploaded {len(chunks)} chunks to namespace '{namespace}'")
       return None, None
