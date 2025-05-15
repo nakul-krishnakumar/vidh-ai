@@ -25,6 +25,10 @@
 - ```text-embedding-3-small```: for embedding text into vectors
 - ```gpt 4o-mini```: LLM
 
+### Workflow
+   ![workflow](https://github.com/user-attachments/assets/3dee93a7-b0f3-4a6b-8260-6cb6e98f668a)
+
+
 ### Repository Structure
 ```
 bns-rag/
