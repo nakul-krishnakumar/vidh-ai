@@ -1,4 +1,4 @@
-# BNS-RAG: Retrieval Augmented Generation System
+# VidhAI: AI Legal Assistant
 
 ### 🧾 About This Application
 
