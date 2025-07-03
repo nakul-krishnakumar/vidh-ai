@@ -1,5 +1,11 @@
-from langchain_openai import ChatOpenAI
+from langchain_openai import AzureChatOpenAI
 from langchain.schema import Document
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+CHAT_MODEL_ENDPOINT = os.getenv("CHAT_MODEL_ENDPOINT")
 
 def generate_answer_from_context(context: list[Document], query: str) -> str | list[str | dict]:
     # Combine the page_content of all documents into a single string
@@ -76,6 +82,12 @@ def generate_answer_from_context(context: list[Document], query: str) -> str | l
     Answer:
     """)
 
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = AzureChatOpenAI(
+        model="gpt-4o-mini",
+        azure_deployment="gpt-4o-mini",
+        api_key=OPENAI_API_KEY,
+        azure_endpoint=CHAT_MODEL_ENDPOINT,
+        temperature=0
+      )
     response = llm.invoke(prompt)
     return response.content
